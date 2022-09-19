@@ -11,7 +11,6 @@ export class ProductListener {
 
     @OnEvent('product_updated')
     async handleProductUpdatedEvent() {
-        await this.cacheManager.del('products_frontend');
-        await this.cacheManager.del('products_backend');
+        await this.cacheManager.del('products');
     }
 }

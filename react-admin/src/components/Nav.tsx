@@ -1,21 +1,27 @@
-import axios from "axios";
-import React, { Dispatch } from "react";
 import { Link } from "react-router-dom";
 import { User } from "../models/user";
 import { connect } from "react-redux";
-import { clearUser /*, useAppDispatch*/ } from "../redux/slices/setUserSlice";
+import { clearUser } from "../redux/slices/setUserSlice";
+import { Dispatch } from "react";
+import { useLogin } from "../contexts/loginContext";
 
 const Nav = (props: any) => {
-  // const dispatch = useAppDispatch();
+  const login = useLogin();
+
+  const logout = () => {
+    if (login?.clear) login?.clear();
+    props?.clearUser();
+  };
+
   return (
     <header className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-      <a
+      <Link
+        to={"/"}
         className="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6"
-        href="#"
         style={{ width: "206px" }}
       >
-        Company name
-      </a>
+        Technic Proof
+      </Link>
       <div className="navbar-nav">
         <div
           className="nav-item text-nowrap"
@@ -25,16 +31,8 @@ const Nav = (props: any) => {
             {props?.user?.userData?.first_name}{" "}
             {props?.user?.userData?.last_name}
           </Link>
-          <Link
-            to={"/login"}
-            className="nav-link px-3"
-            onClick={() => {
-              props?.clearUser();
-              // dispatch(clearUser());
-              // await axios.post("logout"); //añadido en el userSlice (Redux)
-            }}
-          >
-            Sign out
+          <Link to={"/login"} className="nav-link px-3" onClick={logout}>
+            Logout
           </Link>
         </div>
       </div>

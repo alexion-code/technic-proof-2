@@ -1,54 +1,49 @@
-import axios from "axios";
-import React, { Dispatch, useEffect, useState } from "react";
+import React, { Dispatch, Suspense, useLayoutEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { User } from "../models/user";
-import Nav from "./Nav";
-import Sidebar from "./Sidebar";
+import { UserService } from "../models/user";
 import { connect } from "react-redux";
-import { getUser, useAppDispatch } from "../redux/slices/setUserSlice";
 import { fetchUser } from "../redux/slices/setUserSlice";
+import { useLogin } from "../contexts/loginContext";
+const Sidebar = React.lazy(() => import("./Sidebar"));
+const Nav = React.lazy(() => import("./Nav"));
+const Spinner = React.lazy(() => import("./Spinner"));
 
-const Layout = (props: any) => {
-  const dispatch = useAppDispatch();
-  let navigate = useNavigate();
-  const [redirect, setRedirect] = useState<boolean>(false);
-  const [userInfo, setUserInfo] = useState<User | null>(null);
-  console.log(props.user);
-  useEffect(() => {
-    // dispatch(fetchUser());
-    props?.fetchUser();
-    // props?.getUser();
-    // (async () => {
-    // try {
-    //   const { data } = await axios.get("user");
-    //   setUserInfo(data);
-    //   dispatch(setUser(data));
-    // } catch (e) {
-    //   setRedirect(true);
-    // }
-    // })();
+const Layout = (props: {
+  user: UserService;
+  fetchUser: () => void;
+  children: any;
+}) => {
+  const navigate = useNavigate();
+  const login = useLogin();
+
+  useLayoutEffect(() => {
+    if (login?.finished && login?.success && !login?.loading && !login?.error)
+      props?.fetchUser();
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (
-      !props?.user?.userData?.id &&
-      props?.user?.loading === false &&
-      props?.user?.error === false
+      (!props?.user?.userData?.id &&
+        props?.user?.loading === false &&
+        props?.user?.finished === true) ||
+      (!props?.user?.userData?.id &&
+        props?.user?.loading === false &&
+        props?.user?.error === true &&
+        props?.user?.finished === true)
     )
-      setRedirect(true);
+      navigate("/login");
   }, [props?.user]);
-
-  useEffect(() => {
-    if (redirect) navigate("/login");
-  }, [redirect]);
 
   return (
     <div className="layout">
-      <Nav user={props?.user} />
+      <Suspense fallback={<Spinner />}>
+        <Nav />
+      </Suspense>
       <div className="container-fluid">
         <div className="row">
-          <Sidebar />
-
+          <Suspense fallback={<Spinner />}>
+            <Sidebar />
+          </Suspense>
           <main
             className="col-md-9 ms-sm-auto col-lg-10 px-md-4"
             style={{ height: "calc(100%-48px)" }}
@@ -61,12 +56,11 @@ const Layout = (props: any) => {
   );
 };
 
-const mapStateToProps = (state: { user: { user: User } }) => ({
-  user: state.user.user,
+const mapStateToProps = (state: { user: UserService }) => ({
+  user: state.user,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  // getUser: (payload: any) => dispatch(getUser(payload)),
   fetchUser: () => dispatch(fetchUser()),
 });
 

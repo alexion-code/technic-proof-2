@@ -1,10 +1,10 @@
 import { Button, TextField } from "@mui/material";
 import axios from "axios";
 import React, { Dispatch, SyntheticEvent, useEffect, useState } from "react";
-import Layout from "../components/Layout";
 import { connect } from "react-redux";
 import { User } from "../models/user";
 import { setUser, clearUser } from "../redux/slices/setUserSlice";
+const LayoutFrontend = React.lazy(() => import("../components/LayoutFrontend"));
 
 const Profile = (props: any & { user: User }) => {
   const [first_name, setFirstName] = useState(
@@ -17,14 +17,6 @@ const Profile = (props: any & { user: User }) => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const { data } = await axios.get("user");
-  //     setFirstName(data.first_name);
-  //     setLastName(data.last_name);
-  //     setEmail(data.email);
-  //   })();
-  // }, []);
   useEffect(() => {
     if (
       props?.user?.userData?.first_name &&
@@ -60,7 +52,7 @@ const Profile = (props: any & { user: User }) => {
   };
 
   return (
-    <Layout>
+    <LayoutFrontend>
       <h3>Account Information</h3>
       <form onSubmit={submitPersonalInfo}>
         <div className="mb-3">
@@ -111,7 +103,7 @@ const Profile = (props: any & { user: User }) => {
           Submit
         </Button>
       </form>
-    </Layout>
+    </LayoutFrontend>
   );
 };
 

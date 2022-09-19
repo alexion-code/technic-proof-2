@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import axios from "axios";
 import { Provider } from "react-redux";
 import store from "./redux/configureStore";
+import { LoginContextProvider } from "./contexts/loginContext";
 
 axios.defaults.baseURL = "http://localhost:8000/api/admin/";
 axios.defaults.withCredentials = true;
@@ -15,11 +16,11 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  // <React.StrictMode>
   <Provider store={store}>
-    <App />
+    <LoginContextProvider>
+      <App />
+    </LoginContextProvider>
   </Provider>
-  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

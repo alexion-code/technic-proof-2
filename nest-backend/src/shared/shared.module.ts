@@ -12,14 +12,14 @@ import { RedisService } from './redis.service';
         CacheModule.register({
             store: redisStore,
             host: 'redis',
-            port: 6379,
+            port: 6379
         })
     ],
     providers: [RedisService],
     exports: [
         JwtModule,
         CacheModule,
-        RedisService,
+        RedisService
     ]
 })
 export class SharedModule {}

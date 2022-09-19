@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { User } from '../../models/user';
+import { User, UserService } from '../../models/user';
 import store from "../configureStore";
 
 export type appDispatch = typeof store.dispatch;
-export const useAppDispatch = ()=> useDispatch<appDispatch>();
+export const useAppDispatch = () => useDispatch<appDispatch>();
 
 export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
     try {
@@ -14,8 +14,6 @@ export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
     } catch (error) {
         return error;
     }
-    // const { data } = await axios.get("user").then((response) => response.data).catch((error) => error);
-    // return data;
 });
 
 export const clearUser = createAsyncThunk('user/clearUser', async () => {
@@ -28,25 +26,15 @@ export const clearUser = createAsyncThunk('user/clearUser', async () => {
 });
 
 const initialState: {
-    user: {
-        userData: User|undefined,
-        loading: boolean | undefined,
-        error: boolean | undefined
-    }
+    user: UserService
 } = {
     user: {
-            userData: undefined,
+            userData: new User(),
             loading: undefined,
-            error: undefined
+            error: undefined,
+            finished: undefined
     }
 }
-// const initialState = {
-//     user: {
-//         userData: {},
-//         loading: undefined,
-//         error: undefined
-//     }
-// }
 
 export const setUserSlice = createSlice({
     name: 'user',
@@ -56,59 +44,39 @@ export const setUserSlice = createSlice({
             state.user = action.payload;
         },
     },
-    // extraReducers: {
-    //     [fetchUser.pending.type]: (state, action) => {
-    //         state.user = {
-    //             ...state.user,
-    //             loading: true,
-    //         };
-    //     },
-    //     [fetchUser.fulfilled.type]: (state, action) => {
-    //         state.user = {
-    //             loading: false,
-    //             userData: action.payload,
-    //             error: false,
-    //         };
-    //     },
-    //     [fetchUser.rejected.type]: (state, action) => {
-    //         state.user = {
-    //             ...state.user,
-    //             loading: false,
-    //             error: true,//action.payload,
-    //         };
-    //     }
-    // },
     extraReducers(builder) {
-        builder.addCase(fetchUser.fulfilled, (state, action) => {
-            state.user = { userData: action.payload, loading: false, error: false }
-        });
+        // Builder fetchUser
         builder.addCase(fetchUser.pending, (state, action) => {
-            state.user = { userData: state.user.userData, loading: true, error: false }
+            state.user = { userData: undefined, loading: true, error: false, finished: false }
+        });
+        builder.addCase(fetchUser.fulfilled, (state, action) => {
+            state.user = { userData: action.payload, loading: false, error: false, finished: true }
         });
         builder.addCase(fetchUser.rejected, (state, action) => {
-            state.user = { userData: state.user.userData, loading: false, error: false }
+            state.user = { userData: undefined, loading: false, error: true, finished: true }
+        });
+        // Builder clearUser
+        builder.addCase(clearUser.pending, (state, action) => {
+            state.user = { userData: undefined, loading: true, error: false, finished: false }
         });
         builder.addCase(clearUser.fulfilled, (state, action) => {
-            state.user = { userData: undefined, loading: false, error: false }
-        });
-        builder.addCase(clearUser.pending, (state, action) => {
-            state.user = { userData: undefined, loading: true, error: undefined }
+            state.user = { userData: undefined, loading: false, error: false, finished: true }
         });
         builder.addCase(clearUser.rejected, (state, action) => {
-            state.user = { userData: undefined, loading: false, error: true }
+            state.user = { userData: undefined, loading: false, error: true, finished: true }
         });
     },
 });
 
-export const getUser = (payload: any): any => async (dispatch: (e: any) => void) => {
-    dispatch(setUser({ userData:{}, loading: true, error: false }));
-    try {
-        const { data } = await axios.get("user");
-        dispatch(setUser({ userData: { ...data }, loading: false, error: false }));
-    } catch (e) {
-        dispatch(setUser({ userData: {}, loading: false, error: true }));
-      }
-}
+// export const getUser = (payload: any): any => async (dispatch: (e: any) => void) => {
+//     dispatch(setUser({ userData:{}, loading: true, error: false }));
+//     try {
+//         const { data } = await axios.get("user");
+//         dispatch(setUser({ userData: { ...data }, loading: false, error: false }));
+//     } catch (e) {
+//         dispatch(setUser({ userData: {}, loading: false, error: true }));
+//       }
+// }
 
 export const { setUser } = setUserSlice.actions;
 

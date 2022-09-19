@@ -1,31 +1,24 @@
-import axios from "axios";
 import React, { SyntheticEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLogin } from "../contexts/loginContext";
 import "../Login.css";
 
 const Login = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+  const login = useLogin();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [redirect, setRedirect] = useState(false);
 
   const submit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
-    await axios.post(
-      "login",
-      {
-        email,
-        password,
-      }
-    );
-
-    setRedirect(true);
+    if (login?.login) login?.login(email, password);
   };
 
   useEffect(() => {
-    if (redirect) return navigate("/");
-  }, [redirect]);
+    if (login?.finished && login?.success && !login?.loading && !login?.error)
+      navigate("/");
+  }, [login]);
 
   return (
     <main className="form-signin w-100 m-auto">

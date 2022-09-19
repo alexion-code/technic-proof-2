@@ -17,12 +17,6 @@ export class ProductController {
     }
 
     @UseGuards(AuthGuard)
-    @Get('admin/products')
-    async all() {
-        return this.productService.findAll();
-    }
-
-    @UseGuards(AuthGuard)
     @Post('admin/products')
     async create(@Body() body: ProductCreateDto) {
 
@@ -57,24 +51,16 @@ export class ProductController {
         return response;
     }
 
-    @CacheKey('products_frontend')
-    @CacheTTL(30 * 60)
-    @UseInterceptors(CacheInterceptor)
-    @Get('products/frontend')
-    async frontend() {
-        return this.productService.find()
-    }
-
-    @Get('products/backend')
-    async backend(
+    @Get('admin/products')
+    async products(
         @Req() request: Request
     ) {
-        let products = await this.cacheManager.get<Product[]>('products_backend');
-
+        let products = await this.cacheManager.get<Product[]>('products');
+    
         if (!products) {
             products = await this.productService.find();
 
-            await this.cacheManager.set('products_backend', products, { ttl: 1800 });
+            await this.cacheManager.set('products', products, { ttl: 1800 });
         }
 
         if (request.query.s) {
@@ -94,19 +80,24 @@ export class ProductController {
                 return request.query.sort === 'asc'? sign : -sign;
             })
         }
-
-        const page: number = parseInt(request.query.page as any) || 1;
-        const perPage = 9;
-        const total = products.length;
-
-        const data = products.slice((page-1) * perPage, page * perPage);
-
+        let page: number = parseInt(request.query.page as any) || 1;
+        let perPage: number = parseInt(request.query.itemsperpage as any)||9;
+        let total = products.length;
+        let data = [];
+        if (request.query.page === undefined) {
+            data = [...products];
+            perPage = products.length;
+        } else {
+            page = page < 1 ? 1 : page > Math.ceil(total / perPage) ? Math.ceil(total / perPage) : page;
+            data = [...products.slice((page-1) * perPage, page * perPage)];
+        }
 
         return {
             data,
             total,
             page,
             last_page: Math.ceil(total / perPage),
+            itemsperpage: perPage,
         }
     }
 

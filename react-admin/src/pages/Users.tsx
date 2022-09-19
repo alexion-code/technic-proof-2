@@ -1,5 +1,4 @@
 import {
-  Button,
   Paper,
   Table,
   TableBody,
@@ -36,7 +35,6 @@ const Users = () => {
                 <TableCell align="right">#</TableCell>
                 <TableCell align="left">Name</TableCell>
                 <TableCell align="left">Email</TableCell>
-                {/* <TableCell align="right">Actions</TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -47,15 +45,6 @@ const Users = () => {
                     {user.first_name} {user.last_name}
                   </TableCell>
                   <TableCell align="left">{user.email}</TableCell>
-                  {/* <TableCell align="right">
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      href={`users/${user.id}/links`}
-                    >
-                      View
-                    </Button>
-                  </TableCell> */}
                 </TableRow>
               ))}
             </TableBody>

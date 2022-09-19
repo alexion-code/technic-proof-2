@@ -1,28 +1,100 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Users from "./pages/Users";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import RedirectToUsers from "./components/RedirectToUsers";
-import Products from "./pages/products/Products";
-import ProductForm from "./pages/products/ProductForm";
-import Profile from "./pages/Profile";
+import { useLogin } from "./contexts/loginContext";
+import PrivateRoute from "./components/PrivateRoute";
+const Users = React.lazy(() => import("./pages/Users"));
+const RedirectToHome = React.lazy(() => import("./components/RedirectToHome"));
+const ProductsBackend = React.lazy(
+  () => import("./pages/products/ProductsBackend")
+);
+const ProductForm = React.lazy(() => import("./pages/products/ProductForm"));
+const Spinner = React.lazy(() => import("./components/Spinner"));
+// const ProductsFrontend = React.lazy(() => import("./pages/ProductsFrontend"));
+const ProductsFrontend = React.lazy(() => import("./pages/ProductsFrontend"));
+const Login = React.lazy(() => import("./pages/Login"));
+const Register = React.lazy(() => import("./pages/Register"));
+const Profile = React.lazy(() => import("./pages/Profile"));
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path={"/"} element={<RedirectToUsers />} />
-          <Route path={"/login"} element={<Login />} />
-          <Route path={"/register"} element={<Register />} />
-          <Route path={"/profile"} element={<Profile />} />
-          <Route path={"/users"} element={<Users />} />
-          {/* <Route path={"/users/:id/links"} element={<Links />} /> */}
-          <Route path={"/products"} element={<Products />} />
-          <Route path={"/products/create"} element={<ProductForm />} />
-          <Route path={"/products/:id/edit"} element={<ProductForm />} />
+          <Route
+            path={"/"}
+            element={
+              <React.Suspense fallback={<Spinner />}>
+                <ProductsFrontend />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path={"/login"}
+            element={
+              <React.Suspense fallback={<Spinner />}>
+                <Login />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path={"/register"}
+            element={
+              <React.Suspense fallback={<Spinner />}>
+                <Register />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path={"/profile"}
+            element={
+              <React.Suspense fallback={<Spinner />}>
+                <PrivateRoute>
+                  <Profile />
+                </PrivateRoute>
+              </React.Suspense>
+            }
+          />
+          <Route
+            path={"/admin/users"}
+            element={
+              <React.Suspense fallback={<Spinner />}>
+                <PrivateRoute>
+                  <Users />
+                </PrivateRoute>
+              </React.Suspense>
+            }
+          />
+          <Route
+            path={"/admin/products"}
+            element={
+              <React.Suspense fallback={<Spinner />}>
+                <PrivateRoute>
+                  <ProductsBackend />
+                </PrivateRoute>
+              </React.Suspense>
+            }
+          />
+          <Route
+            path={"admin/products/create"}
+            element={
+              <React.Suspense fallback={<Spinner />}>
+                <PrivateRoute>
+                  <ProductForm />
+                </PrivateRoute>
+              </React.Suspense>
+            }
+          />
+          <Route
+            path={"admin/products/:id/edit"}
+            element={
+              <React.Suspense fallback={<Spinner />}>
+                <PrivateRoute>
+                  <ProductForm />
+                </PrivateRoute>
+              </React.Suspense>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </div>

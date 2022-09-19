@@ -35,7 +35,7 @@ const Register = () => {
   };
 
   useEffect(() => {
-    if (redirect) return navigate("/login");
+    if (redirect) navigate("/login");
   }, [redirect]);
   return (
     <main className="form-register w-100 m-auto">

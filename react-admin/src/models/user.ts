@@ -4,3 +4,10 @@ export class User {
     last_name!: string|"";
     email!: string|"";
 }
+
+export class UserService {
+        userData: User | undefined;
+        loading: boolean | undefined;
+        error: boolean | undefined;
+        finished: boolean | undefined;
+    }
