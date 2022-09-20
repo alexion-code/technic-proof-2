@@ -1,17 +1,18 @@
 import React from "react";
-import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useLogin } from "./contexts/loginContext";
 import PrivateRoute from "./components/PrivateRoute";
+import "./scss/global.scss";
 const Users = React.lazy(() => import("./pages/Users"));
-const RedirectToHome = React.lazy(() => import("./components/RedirectToHome"));
 const ProductsBackend = React.lazy(
-  () => import("./pages/products/ProductsBackend")
+  () => import("./pages/products-admin/ProductsBackend")
 );
-const ProductForm = React.lazy(() => import("./pages/products/ProductForm"));
+const ProductForm = React.lazy(
+  () => import("./pages/products-admin/ProductForm")
+);
 const Spinner = React.lazy(() => import("./components/Spinner"));
-// const ProductsFrontend = React.lazy(() => import("./pages/ProductsFrontend"));
-const ProductsFrontend = React.lazy(() => import("./pages/ProductsFrontend"));
+const ProductsFrontend = React.lazy(
+  () => import("./pages/products-frontend/ProductsFrontend")
+);
 const Login = React.lazy(() => import("./pages/Login"));
 const Register = React.lazy(() => import("./pages/Register"));
 const Profile = React.lazy(() => import("./pages/Profile"));

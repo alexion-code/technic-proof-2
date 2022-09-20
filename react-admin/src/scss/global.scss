@@ -1,3 +1,29 @@
+@import 'index.scss';
+
+@mixin tablet {
+    @media (min-width: 992px) {
+        @content
+    }
+}
+
+@mixin desktop {
+    @media (min-width: 1200px) {
+        @content
+    }
+}
+
+@mixin mobile-large {
+    @media (min-width: 768px) {
+        @content
+    }
+}
+
+@mixin mobile {
+    @media (max-width: 575px) {
+        @content
+    }
+}
+
 body {
   font-size: .875rem;
 }

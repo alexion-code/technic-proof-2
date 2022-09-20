@@ -2,9 +2,8 @@ import React, { Dispatch, Suspense, useLayoutEffect } from "react";
 import { UserService } from "../models/user";
 import { fetchUser } from "../redux/slices/setUserSlice";
 import { connect } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useLogin } from "../contexts/loginContext";
-const HeaderFrontend = React.lazy(() => import("./HeaderFrontend"));
 const NavFrontend = React.lazy(() => import("./NavFrontend"));
 const Spinner = React.lazy(() => import("./Spinner"));
 
@@ -12,11 +11,10 @@ const LayoutFrontend = (props: {
   user: UserService;
   fetchUser: () => void;
   children: any;
+  className?: string;
 }) => {
   const navigate = useNavigate();
-  const location = useLocation();
   const login = useLogin();
-  const header = location.pathname === "/" && <HeaderFrontend />;
 
   useLayoutEffect(() => {
     if (login?.finished && login?.success && !login?.loading && !login?.error)
@@ -43,10 +41,10 @@ const LayoutFrontend = (props: {
       </Suspense>
 
       <main>
-        <Suspense fallback={<Spinner />}>{header}</Suspense>
-
-        <div className="album py-5 bg-light">
-          <div className="container">{props.children}</div>
+        <div
+          className={`album py-4 ${props?.className ? props?.className : ""}`}
+        >
+          <div className="container">{props?.children}</div>
         </div>
       </main>
     </div>
