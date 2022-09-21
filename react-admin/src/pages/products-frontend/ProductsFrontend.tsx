@@ -88,15 +88,11 @@ const ProductsFrontend = () => {
           </div>
         </section>
         <div className="products-frontend__select mb-4 input-group">
-          <select
-            className="products-frontend__select-left form-select"
-            style={{ cursor: "pointer" }}
-          >
+          <select className="products-frontend__select-left form-select">
             <option>{`Productos (${totalItems ? totalItems : "0"})`}</option>
           </select>
           <select
             className="products-frontend__select-right form-select"
-            style={{ cursor: "pointer" }}
             onChange={(e) => sort(e?.target?.value)}
           >
             <option>ORDENAR POR</option>

@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "../../components/Spinner";
 const Layout = React.lazy(() => import("../../components/Layout"));
 
-const ProductForm = (props: any) => {
+const ProductForm = () => {
   let navigate = useNavigate();
   let { id } = useParams();
   const [title, setTitle] = React.useState("");

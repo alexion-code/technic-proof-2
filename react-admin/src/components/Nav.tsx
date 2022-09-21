@@ -14,11 +14,14 @@ const Nav = (props: any) => {
   };
 
   return (
-    <header className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <header
+      className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow"
+      style={{ height: "48px" }}
+    >
       <Link
         to={"/"}
-        className="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6"
-        style={{ width: "206px" }}
+        className="navbar-brand me-0 px-3 fs-6"
+        style={{ width: "160px" }}
       >
         Technic Proof
       </Link>

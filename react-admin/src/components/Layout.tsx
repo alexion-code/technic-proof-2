@@ -4,7 +4,7 @@ import { UserService } from "../models/user";
 import { connect } from "react-redux";
 import { fetchUser } from "../redux/slices/setUserSlice";
 import { useLogin } from "../contexts/loginContext";
-const Sidebar = React.lazy(() => import("./Sidebar"));
+const Sidebar = React.lazy(() => import("./sidebar/Sidebar"));
 const Nav = React.lazy(() => import("./Nav"));
 const Spinner = React.lazy(() => import("./Spinner"));
 
@@ -39,18 +39,16 @@ const Layout = (props: {
       <Suspense fallback={<Spinner />}>
         <Nav />
       </Suspense>
-      <div className="container-fluid">
-        <div className="row">
-          <Suspense fallback={<Spinner />}>
-            <Sidebar />
-          </Suspense>
-          <main
-            className="col-md-9 ms-sm-auto col-lg-10 px-md-4"
-            style={{ height: "calc(100%-48px)" }}
-          >
-            <div className="table-responsive">{props.children}</div>
-          </main>
-        </div>
+      <div style={{display: "flex", flexDirection: "row"}}>
+        <Suspense fallback={<Spinner />}>
+          <Sidebar />
+        </Suspense>
+        <main
+          className="ms-sm-auto px-md-4"
+          style={{ height: "calc(100%-48px)", width: "calc(100% - 180px)" }}
+        >
+          <div className="table-responsive">{props.children}</div>
+        </main>
       </div>
     </div>
   );

@@ -61,7 +61,7 @@ const Products = (props: {
 
   return (
     <div className="products-items">
-      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      <div className="row row-cols-2 row-cols-sm-2 row-cols-md-3 g-3">
         {props.products.map((product, index) => (
           <div
             className="col"

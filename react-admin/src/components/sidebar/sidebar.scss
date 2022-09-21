@@ -1,0 +1,14 @@
+.sidebar {
+  width: 160px;
+  position: relative;
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: .5rem;
+  overflow-x: hidden;
+  overflow-y: auto; 
+
+  .bi {
+    vertical-align: -0.125em;
+    fill: white;
+  }
+}
