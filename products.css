@@ -1,0 +1,116 @@
+.products__header {
+  height: 74px;
+  width: 100%;
+}
+
+.products__nav {
+  width: 100%;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.products__nav-list {
+  display: inline-flex;
+  flex-direction: row;
+  list-style: none;
+  text-decoration: none;
+}
+
+/* SELECTS */
+.products__select {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.products__select-left,
+.products__select-right {
+  margin-left: -1px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-right: 0;
+  border-radius: 0;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  cursor: pointer;
+  position: relative;
+  flex: 1 1 auto;
+  width: 1%;
+  min-width: 0;
+  display: block;
+  width: 100%;
+  padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+  -moz-padding-start: calc(0.75rem - 3px);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 0.375rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+/* PRODUCT-ITEMS */
+
+.products-items__container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.products-items__card {
+  width: 220px;
+  margin: 0;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.products-items__image-card {
+  display: block;
+  position: relative;
+  width: 220px;
+  height: 188px;
+}
+
+.products-items__image-card-layout {
+  background-color: white;
+  width: 45px;
+  height: 45px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0px;
+  right: 0px;
+  z-index: 99;
+  border-radius: 50%;
+  margin: 8px 8px 0 0;
+  cursor: pointer;
+}
+
+.products-items__image-card-svg {
+  width: 35px;
+  height: 35px;
+}
+
+.products-items__image-card-img {
+  width: 220px;
+  height: 188px;
+}
