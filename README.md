@@ -3,7 +3,7 @@
 Este proyecto ha sido creado con motivo de la realización de una prueba técnica de flat101.
 
 ********************************************************
-* DETALLES DE LA TECNOLOGÍA Y ARQUITECTURAS EMPLEADAS: *
+ DETALLES DE LA TECNOLOGÍA Y ARQUITECTURAS EMPLEADAS: 
 ********************************************************
 
 Se utiliza Docker Compose como contenedor para ejecutar la API, la Base de Datos y Redis.
@@ -15,7 +15,7 @@ La Base de Datos utilizada es MySQL.
 También utilizamos REDIS para las transacciones de Datos, que es un rápido almacén de datos clave-valor en memoria de código abierto.
 
 *********************************
-* INSTRUCCIONES DE INSTALACIÓN: *
+ INSTRUCCIONES DE INSTALACIÓN: 
 *********************************
 
 1.-Clone el repositorio en local con GIT.
