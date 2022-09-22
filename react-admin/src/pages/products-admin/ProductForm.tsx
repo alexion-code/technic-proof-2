@@ -11,7 +11,9 @@ const ProductForm = () => {
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [price, setPrice] = React.useState("");
-  const [image, setImage] = React.useState("");
+  const [image, setImage] = React.useState(
+    "http://localhost:5000/image_280_240.jpg"
+  );
 
   useLayoutEffect(() => {
     if (id) {
@@ -19,7 +21,7 @@ const ProductForm = () => {
         const { data } = await axios.get(`products/${id}`);
         setTitle(data.title);
         setDescription(data.description);
-        setImage(data.image);
+        // setImage(data.image);
         setPrice(data.price);
       })();
     }
@@ -62,6 +64,7 @@ const ProductForm = () => {
           <div className="mb-3">
             <TextField
               value={image}
+              disabled={true}
               label="Image"
               onChange={(e) => setImage(e.target.value)}
             />
